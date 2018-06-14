@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+   
+   
+    <record model="ir.ui.view" id="customeraddress.list">
+      <field name="name">customeraddress list</field>
+      <field name="model">customeraddress.customeraddress</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="number"/>
+          <field name="city"/>
+	  <field name="zipcode"/>
+        </tree>
+      </field>
+    </record>
+    
+
+
+   
+    <record model="ir.actions.act_window" id="customeraddress.action_window">
+      <field name="name">customeraddress window</field>
+      <field name="res_model">customeraddress.customeraddress</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+
+
+   
+    <record model="ir.actions.server" id="customeraddress.action_server">
+      <field name="name">customeraddress server</field>
+      <field name="model_id" ref="model_customeraddress_customeraddress"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    
+
+
+   
+    <menuitem name="customeraddress" id="customeraddress.menu_root"/>
+    
+
+   
+    <menuitem name="Menu 1" id="customeraddress.menu_1" parent="customeraddress.menu_root"/>
+    <menuitem name="Menu 2" id="customeraddress.menu_2" parent="customeraddress.menu_root"/>
+    
+
+   
+    <menuitem name="List" id="customeraddress.menu_1_list" parent="customeraddress.menu_1"
+              action="customeraddress.action_window"/>
+    <menuitem name="Server to list" id="customeraddress" parent="customeraddress.menu_2"
+              action="customeraddress.action_server"/>
+    
+  </data>
+</odoo>
