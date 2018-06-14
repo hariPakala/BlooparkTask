@@ -12,7 +12,7 @@ will be created with fields name, number, city and zipcode
 A react web application is created with customer form ('Client') 
 from this client customer address information is sent to a http server running on port 8080
 
-The server running on port 8080 will recieve the data and send it to a python https server 
+The server running on port 8080 will receive the data and send it to a python https server 
 running on port 4432
 
 Python server would verify the customer city and zipcode matching and insert the data into
