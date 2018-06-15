@@ -22,3 +22,7 @@ If the zipcode does not exist or zipcode,city doesnot match an alert is generate
 
 Certificates are stored in config setting settings folder 
 
+Sample Data
+postcode :77428
+city : COLLEGEPORT
+ 
