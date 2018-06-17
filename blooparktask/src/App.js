@@ -13,7 +13,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className ="ss">
+      <div className="ss">
        <div className="Header">
             <CheckoutApp  parentMethod={this.ath} />
         </div>

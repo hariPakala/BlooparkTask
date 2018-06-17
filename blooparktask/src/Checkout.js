@@ -16,32 +16,20 @@ class CheckoutApp extends React.Component {
    this.customecity = this.customecity.bind(this);
    this.customerzipcode = this.customerzipcode.bind(this);
    this.socket = io('localhost:8080');
-    this.state = {
-     showloginForm: false,
-     showstatusMs: false,
-     uval : '',
-     upwd : ''
-     };
-     this.socket.on('RECEIVE_MESSAGE', function(data){
+   this.socket.on('OUTBOUND_SERVER', function(data){
          if (data === "1"){
            window.confirm('Data Submitted successfully');
          }
-
-         else if (data == "2") {
+         else if (data === "2") {
                 window.confirm('Zip code and city exactly match and but phone number is not fine');
          }
-
-         else if (data == "3") {
-
+         else if (data === "3") {
               window.confirm('Zip Code and City are not matching');
          }
-         else if (data == "4"){
-
+         else if (data === "4"){
               window.confirm('Zip code is not found enter valid zip code');
          }
-
      });
-
  };
 
  customername(val)
@@ -76,46 +64,29 @@ class CheckoutApp extends React.Component {
    const enumber = encodeURIComponent(number);
    const ecity = encodeURIComponent(city);
    const ezipcode = encodeURIComponent(zipcode);
-   
-   this.socket.emit('SEND_MESSAGE', {
+
+   this.socket.emit('INBOUND_SERVER', {
      cname : ename,
      cnumber :enumber,
      ccity : ecity,
      czipcode : ezipcode
  });
 }
-
 loginSubmit(event)
  {
    event.preventDefault();
    var self = this;
    self.handleAutherization(this.state.cname,this.state.cnum, this.state.ccity,this.state.czip);
-   if(localStorage.getItem('status') === 'Zip Code and City are not matching')
-   {
-       this.setState(
-         {
-           showstatusMs: true
-         }
-       );
-   }
-   else if (localStorage.getItem('status') === 'Zip code is not found')
-   {
-       this.setState(
-         {
-           showstatusMs: true
-         }
-       );
-   }
- }
-  render() {
+}
+render() {
     return <div className='login'>
               <div className="logo">
-                  <div className = "logoImg" >
-                    <img src={blogo} />
-                      <span align = "center"> Bloopark </span>
+                  <div className="logoImg" >
+                    <img alt="Bloopark Logo" src={blogo} />
+                      <span align="center"> Bloopark </span>
                   </div>
               </div>
-              <form onSubmit= { this.loginSubmit }>
+              <form onSubmit={ this.loginSubmit }>
               <Input type='text' name='customername' placeholder='customername'
               onInText={this.customername} />
               <Input type='text' name='customernumber' placeholder='customernumber'
@@ -125,13 +96,6 @@ loginSubmit(event)
               <Input type='text' name='customerzipcode' placeholder='customerzipcode'
               onInText={this.customerzipcode}/>
                 <button className="Submit" > Submit</button>
-                <br />
-                {
-                      this.state.showstatusMs  ?
-                          <label htmlFor= "ss">{localStorage.getItem('status')}</label> :
-                          null
-                }
-
               </form>
               </div>
   }
@@ -156,7 +120,6 @@ class Input extends React.Component {
         this.props.onInText(this.state.inText)
       });
       }
-
 
   render() {
     return <div className='Input'>

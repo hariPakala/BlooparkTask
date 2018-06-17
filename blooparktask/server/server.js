@@ -12,15 +12,15 @@ io = socket(server);
 io.on('connection', (socket) => {
 
 
-socket.on('SEND_MESSAGE', function(data){
+socket.on('INBOUND_SERVER', function(data){
 
 
   var postData = querystring.stringify({
 
       'postcode' : data.czipcode,
-       'city'    :  data.ccity,
-        'phone'  :  data.cnumber,
-        'name'     : data.cname,
+       'city'    : data.ccity,
+        'phone'  : data.cnumber,
+      'name'     : data.cname,
    });
 
    var options = {
@@ -39,11 +39,8 @@ socket.on('SEND_MESSAGE', function(data){
   var req = https.request(options, (res) => {
 
      res.on('data',(d) => {
-
-                  console.log(d.toString());
-                io.emit('RECEIVE_MESSAGE', d.toString());
-
-    });
+       io.emit('OUTBOUND_SERVER', d.toString());
+     });
   });
 
   req.on('error', (e) => {
