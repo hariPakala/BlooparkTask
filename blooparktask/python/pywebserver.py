@@ -3,6 +3,7 @@ import ssl
 from io import BytesIO
 import zipcodes
 import xmlrpc.client
+import xml.etree.ElementTree
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
@@ -16,15 +17,15 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             return False
 
     def insertIntoOdoo(self,city,postcode,num,name):
-
-        url = 'http://localhost:8069'
-        db = 'odoo'
-        username = 'harish.pakala@ovgu.de'
-        password = 'admin'
+        apiTree = xml.etree.ElementTree.parse('../config/settings/apicred.xml').getroot()
+        url = apiTree[0].text
+        dbname = apiTree[1].text
+        username = apiTree[2].text
+        password = apiTree[3].text
         common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
-        uid = common.authenticate(db, username, password, {})
+        uid = common.authenticate(dbname, username, password, {})
         models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
-        rs1 = models.execute_kw(db, uid, password,'customeraddress.customeraddress', 'create',
+        rs1 = models.execute_kw(dbname, uid, password,'customeraddress.customeraddress', 'create',
               [{'city': city, 'zipcode': postcode, 'number': num, 'name': name}])
         
     def verfiy(self,body):
