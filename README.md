@@ -20,9 +20,11 @@ odoo database for the module customer.address
 If the zipcode does not exist or zipcode,city doesnot match an alert is generated in the web application
 
 
-Certificates are stored in config setting settings folder 
+Certificates are stored in config setting settings folder ("1234") 
 
 Sample Data
 postcode :77428
 city : COLLEGEPORT
  
+Zipcode and city match is working only for USA
+Phone number -- 11 digits
