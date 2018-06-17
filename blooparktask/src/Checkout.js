@@ -24,16 +24,20 @@ class CheckoutApp extends React.Component {
      };
      this.socket.on('RECEIVE_MESSAGE', function(data){
          if (data === "1"){
-           window.confirm('Data Submitted');
+           window.confirm('Data Submitted successfully');
          }
 
          else if (data == "2") {
-                window.confirm('Zip Code and City are not matching');
+                window.confirm('Zip code and city exactly match and but phone number is not fine');
          }
 
          else if (data == "3") {
 
-              window.confirm('Zip code is not found');
+              window.confirm('Zip Code and City are not matching');
+         }
+         else if (data == "4"){
+
+              window.confirm('Zip code is not found enter valid zip code');
          }
 
      });
@@ -66,20 +70,22 @@ class CheckoutApp extends React.Component {
    });
  }
 
-
  handleAutherization(name,number,city,zipcode){
 
+   const ename = encodeURIComponent(name);
+   const enumber = encodeURIComponent(number);
+   const ecity = encodeURIComponent(city);
+   const ezipcode = encodeURIComponent(zipcode);
+   
    this.socket.emit('SEND_MESSAGE', {
-     cname : name,
-     cnumber :number,
-     ccity : city,
-     czipcode : zipcode
+     cname : ename,
+     cnumber :enumber,
+     ccity : ecity,
+     czipcode : ezipcode
  });
+}
 
-  }
-
-
- loginSubmit(event)
+loginSubmit(event)
  {
    event.preventDefault();
    var self = this;
