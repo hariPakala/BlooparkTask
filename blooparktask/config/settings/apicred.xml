@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ApiCred>
+	 <url>http://localhost:8069</url>
+	 <dbname>odoo</dbname>
+         <username>harish.pakala@ovgu.de</username>
+         <password>admin</password>
+</ApiCred>
